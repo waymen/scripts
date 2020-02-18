@@ -2,18 +2,18 @@
 # 说明: 此脚本用于每天定时备份并切割mysql的错误日志，然后保留多少天(取决于LOG_KEEP_DAY变量值)，防止占满磁盘
 # 此脚本的权限应该设置为700权限并只能root用户执行, 最后添加到crontab定时执行
 
-##################################### variables #########################################
+##################################### variables ###############################################################
 MYSQL_USER="your_user"                          # 用户名               
 MYSQL_PASSWD="your_password"                    # 密码
 MYSQL_HOST="localhost"                          # 主机，默认localhost
 MYSQL_PORT="3306"                               # 端口
 MYSQL_CHARSET="utf8mb4"                         # 客户端编码
-MYSQL_BIN=                                      # mysql工具命令路径，默认取系统的环境变量, 除非指定
+MYSQL_BIN=                                      # mysql工具命令路径，默认取系统的环境变量
 MYSQL_ERRORLOG_BACKUPDIR="/data/logs/mysql"     # mysql错误日志备份目录
-SCRIPT_LOG=                                     # 记录脚本操作日志, 默认为/tmp/script_name.sh.log，除非指定
+SCRIPT_LOG=                                     # 记录脚本操作日志, 默认为/tmp/script_name.sh.log
 LOG_KEEP_DAY=15                                 # 错误日志保留天数
 
-#################################### functions ##########################################
+#################################### functions ##############################################################
 print() { printf "%s\n" "$*"; }                 # 对printf一个包装, 用于打印
 now() { date +"%Y-%m-%d-%H-%M-%S"; }            # 获取当前时间, 格式是YYYY-mm-dd-HH-MM-SS
 yesterday() { date -d 'yesterday' '+%Y%m%d'; }  # 获取昨天的时间，格式是YYYYmmdd
