@@ -16,6 +16,7 @@ PCRE_SOUCRE_DIR=${PCRE_SOURCE_PACKAGE%*.tar.gz}     # pcre文件名
 NGINX_SOUCRE_DIR=${NGINX_SOURCE_PACKAGE%*.tar.gz}   # nginx文件名
 NGINX_VHOSTS_DIR=${NGINX_INSTALL_DIR}/vhosts        # nginx虚拟机主机目录
 NGINX_LOGS=                                         # nginx日志目录，非空则创建
+MAKE_TEMP="/tmp"                                    # 编译安装的临时目录
 
 # 编译选项
 BUILD_OPTS="--prefix=${NGINX_INSTALL_DIR}
@@ -66,7 +67,7 @@ grep -q ${NGINX_OWNER} /etc/passwd || {
 }
 
 # 下载nginx1.6.1与pcre8.44
-cd /tmp
+cd ${MAKE_TEMP}
 curl -sLO http://nginx.org/download/${NGINX_SOURCE_PACKAGE}
 if [[ $? -ne 0 ]] || [[ ! -f ${NGINX_SOURCE_PACKAGE} ]]; then
   echo "下载: ${NGINX_SOURCE_PACKAGE} 失败"
@@ -99,7 +100,7 @@ cd ..
 mkdir -p ${NGINX_INSTALL_DIR}/vhosts
 [[ ${NGINX_LOGS} ]] && mkdir -p ${NGINX_LOGS}
 
-# cpu核心数
+# cpu核心数，用于nginx.conf 配置
 cpu_count=$( awk '/^processor/' '/proc/cpuinfo' | sort |uniq | wc -l )
 # 获取系统版本号: 6还是7
 version=$( awk '{print $(NF-1)}' /etc/redhat-release 2> /dev/null | cut -d. -f1 )
@@ -164,7 +165,7 @@ cat > /etc/init.d/nginx << EOF
 [ "\$NETWORKING" = "no" ] && exit 0
 
 nginx="${NGINX_INSTALL_DIR}/sbin/nginx"
-prog=$(basename \$nginx)
+prog=\$(basename \$nginx)
 lockfile="/var/lock/subsys/nginx"
 pidfile="${NGINX_INSTALL_DIR}/logs/\${prog}.pid"
 
@@ -282,9 +283,6 @@ case "\$1" in
         exit 2
 esac
 EOF
-chmod +x /etc/init.d/nginx
-chkconfig --add nginx
-chkconfig nginx --level 35 on
 cat > ${NGINX_VHOSTS_DIR}/index.conf << EOF
 server {
     listen       80;
@@ -292,11 +290,15 @@ server {
 
     location / {
         root   html;
-        ndex  index.html index.htm;
+        index  index.html index.htm;
     }
 }
 EOF
-servie nginx start
+chmod +x /etc/init.d/nginx
+chkconfig --add nginx
+chkconfig nginx --level 35 on
+${NGINX_INSTALL_DIR}/sbin/nginx
+
 else
 cat > /lib/systemd/system/nginx.service << EOF
 [Unit]
@@ -322,7 +324,7 @@ server {
 
     location / {
         root   html;
-        ndex  index.html index.htm;
+        index  index.html index.htm;
     }
 }
 EOF
@@ -330,5 +332,11 @@ systemctl start nginx
 systemctl enable nginx  
 fi 
 
-echo "安装成功, 安装目录: ${NGINX_INSTALL_DIR}  版本: ${NGINX_SOUCRE_DIR}"
-exit
+curl -s localhost &> /dev/null && {
+  echo "安装成功, 路径: ${NGINX_INSTALL_DIR}  版本: ${NGINX_SOUCRE_DIR}"
+  cd ${MAKE_TEMP}
+  # 清除编译完成后的源码包与文件
+  rm -rf ${PCRE_SOURCE_PACKAGE} ${PCRE_SOUCRE_DIR} ${NGINX_SOURCE_PACKAGE} ${NGINX_SOUCRE_DIR} 
+  exit 
+} || { echo "已安装但未启动成功, 路径: ${NGINX_INSTALL_DIR}  版本: ${NGINX_SOUCRE_DIR}"; exit; }
+
