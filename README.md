@@ -12,7 +12,7 @@ curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/system_init.sh
 
 方式1 (需要科学上网)
 ```
-curl -s https://raw.githubusercontent.com/waymen/scripts/master/install_nginx.sh ｜ bash
+curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/install_nginx.sh ｜ bash
 ```
 方式2
 ```
