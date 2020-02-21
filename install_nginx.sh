@@ -96,13 +96,13 @@ make || exit
 make install
 cd ..
 
-# 创建虚拟目录或日志目录
+# 创建虚拟目录与日志目录
 mkdir -p ${NGINX_INSTALL_DIR}/vhosts
 [[ ${NGINX_LOGS} ]] && mkdir -p ${NGINX_LOGS}
 
-# cpu核心数，用于nginx.conf 配置
+# cpu核心数，用于nginx.conf配置
 cpu_count=$( awk '/^processor/' '/proc/cpuinfo' | sort |uniq | wc -l )
-# 获取系统版本号: 6还是7
+# 获取系统版本号
 version=$( awk '{print $(NF-1)}' /etc/redhat-release 2> /dev/null | cut -d. -f1 )
 
 # 生成nginx.conf配置文件
@@ -141,7 +141,7 @@ http {
     include ${NGINX_VHOSTS_DIR}/*.conf;
 }
 EOF
-
+# 启动脚本
 if [[ ${version} -eq 6 ]]; then
 cat > /etc/init.d/nginx << EOF
 #!/bin/sh
@@ -283,6 +283,7 @@ case "\$1" in
         exit 2
 esac
 EOF
+# 测试配置文件
 cat > ${NGINX_VHOSTS_DIR}/index.conf << EOF
 server {
     listen       80;
@@ -316,7 +317,8 @@ PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
-EOF       
+EOF
+# 测试配置文件       
 cat > ${NGINX_VHOSTS_DIR}/index.conf << EOF
 server {
     listen       80;
