@@ -10,7 +10,7 @@ curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/system_init.sh
 ## install_nginx.sh
 自动编译安装nginx，默认版本为1.16.1，如果需要安装其它版本，修改脚本中的 NGINX_SOURCE_PACKAGE 变量, 具体查看脚本内容.
 
-方式1 (需要科学上网)
+方式1 ( 需要科学上网  )
 ```
 curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/install_nginx.sh ｜ bash
 ```
