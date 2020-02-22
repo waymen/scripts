@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # 通过ss命令获取一些socket信息，可以提供给zabbix-server采集、监控网络的状态、画图、报警等
 # 含ipv6的信息
 
