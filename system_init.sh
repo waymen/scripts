@@ -31,7 +31,7 @@ done
 
 echo "-----Settings start Service-----"
 if [[ $VERSION == 6 ]]; then
-  for service in $(chkconfig --list|grep on|awk '{print $1}')
+  for service in $( chkconfig --list| grep on | awk '{print $1}' )
     do 
       chkconfig --level 12345 ${service} off
     done 
@@ -41,10 +41,10 @@ if [[ $VERSION == 6 ]]; then
   done
 
 elif [[ $VERSION == 7 ]]; then
-  systemctl stop NetworkManager
-  systemctl disable NetworkManager
-  systemctl stop firewalld
-  systemctl disable firewalld
+  for service in NetworkManager firewalld; do
+    systemctl stop $service
+    systemctl disable $service
+  done
 fi
 
 echo "-----Add aliyun repo-----"
