@@ -8,15 +8,15 @@
 #4. 构建nginx.conf、启动脚本
 #5. 启动
 
-NGINX_OWNER="nginx"                                 # nginx拥有者
-NGINX_INSTALL_DIR="/opt/nginx"                      # nginx安装目录
-PCRE_SOURCE_PACKAGE="pcre-8.44.tar.gz"              # pcre源码包
-NGINX_SOURCE_PACKAGE="nginx-1.16.1.tar.gz"          # nginx源码包
-PCRE_SOUCRE_DIR=${PCRE_SOURCE_PACKAGE%*.tar.gz}     # pcre文件名
-NGINX_SOUCRE_DIR=${NGINX_SOURCE_PACKAGE%*.tar.gz}   # nginx文件名
-NGINX_VHOSTS_DIR=${NGINX_INSTALL_DIR}/vhosts        # nginx虚拟机主机目录
-NGINX_LOGS=                                         # nginx日志目录，非空则创建
-MAKE_TEMP="/tmp"                                    # 编译安装的临时目录
+export NGINX_OWNER="nginx"                                 # nginx拥有者
+export NGINX_INSTALL_DIR="/opt/nginx"                      # nginx安装目录
+export PCRE_SOURCE_PACKAGE="pcre-8.44.tar.gz"              # pcre源码包
+export NGINX_SOURCE_PACKAGE="nginx-1.16.1.tar.gz"          # nginx源码包
+export PCRE_SOUCRE_DIR=${PCRE_SOURCE_PACKAGE%*.tar.gz}     # pcre文件名
+export NGINX_SOUCRE_DIR=${NGINX_SOURCE_PACKAGE%*.tar.gz}   # nginx文件名
+export NGINX_VHOSTS_DIR=${NGINX_INSTALL_DIR}/vhosts        # nginx虚拟机主机目录
+export NGINX_LOGS=                                         # nginx日志目录，非空则创建
+export MAKE_TEMP="/tmp"                                    # 编译安装的临时目录
 
 # 编译选项
 BUILD_OPTS="--prefix=${NGINX_INSTALL_DIR}
