@@ -8,15 +8,15 @@
 #4. 构建nginx.conf、启动脚本
 #5. 启动
 
-export NGINX_OWNER="nginx"                                 # nginx拥有者
-export NGINX_INSTALL_DIR="/opt/nginx"                      # nginx安装目录
-export PCRE_SOURCE_PACKAGE="pcre-8.44.tar.gz"              # pcre源码包
-export NGINX_SOURCE_PACKAGE="nginx-1.16.1.tar.gz"          # nginx源码包
-export PCRE_SOUCRE_DIR=${PCRE_SOURCE_PACKAGE%*.tar.gz}     # pcre文件名
-export NGINX_SOUCRE_DIR=${NGINX_SOURCE_PACKAGE%*.tar.gz}   # nginx文件名
-export NGINX_VHOSTS_DIR=${NGINX_INSTALL_DIR}/vhosts        # nginx虚拟机主机目录
-export NGINX_LOGS=                                         # nginx日志目录，非空则创建
-export MAKE_TEMP="/tmp"                                    # 编译安装的临时目录
+NGINX_OWNER="nginx"                                 # nginx拥有者
+NGINX_INSTALL_DIR="/opt/nginx"                      # nginx安装目录
+PCRE_SOURCE_PACKAGE="pcre-8.44.tar.gz"              # pcre源码包
+NGINX_SOURCE_PACKAGE="nginx-1.16.1.tar.gz"          # nginx源码包
+PCRE_SOUCRE_DIR=${PCRE_SOURCE_PACKAGE%*.tar.gz}     # pcre文件名
+NGINX_SOUCRE_DIR=${NGINX_SOURCE_PACKAGE%*.tar.gz}   # nginx文件名
+NGINX_VHOSTS_DIR=${NGINX_INSTALL_DIR}/vhosts        # nginx虚拟机主机目录
+MAKE_TEMP="/tmp"                                    # 编译安装的临时目录
+NGINX_LOGS=                                         # nginx日志目录，非空则创建
 
 # 编译选项
 BUILD_OPTS="--prefix=${NGINX_INSTALL_DIR}
@@ -26,9 +26,12 @@ BUILD_OPTS="--prefix=${NGINX_INSTALL_DIR}
             --with-stream
             --with-http_ssl_module
             --with-http_stub_status_module
-            --with-http_gzip_static_module
-            "
+            --with-http_gzip_static_module"
 
+export NGINX_OWNER NGINX_INSTALL_DIR PCRE_SOURCE_PACKAGE NGINX_SOURCE_PACKAGE \
+       PCRE_SOUCRE_DIR NGINX_SOUCRE_DIR NGINX_VHOSTS_DIR NGINX_LOGS MAKE_TEMP \
+       BUILD_OPTS
+       
 # 是root用户吗？
 [[ ${UID} -ne 0 ]] && { 
   echo "必须使用root用户运行此脚本"
@@ -84,7 +87,7 @@ fi
 tar xf ${PCRE_SOURCE_PACKAGE}
 cd ${PCRE_SOUCRE_DIR}
 ./configure
-make || exit
+make -j2 || exit
 make install
 cd ..
 
@@ -92,7 +95,7 @@ cd ..
 tar xf ${NGINX_SOURCE_PACKAGE}
 cd ${NGINX_SOUCRE_DIR}
 ./configure ${BUILD_OPTS}
-make || exit
+make -j2 || exit
 make install
 cd ..
 
