@@ -12,7 +12,7 @@
   exit 1
 }
 
-VERSION=$( awk '{print $(NF-1)}' /etc/redhat-release | cut -d. -f1 )
+export VERSION=$( awk '{print $(NF-1)}' /etc/redhat-release | cut -d. -f1 )
 
 echo "-----Disable selinux and iptables-----"
 /usr/sbin/setenforce 0
