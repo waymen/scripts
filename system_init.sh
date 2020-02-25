@@ -32,17 +32,16 @@ for user in adm lp sync shutdown halt uucp operator games gopher; do
 done
 
 echo "-----Settings start Service-----"
-if [[ $VERSION == 6 ]]; then
-  for service in $( chkconfig --list| grep on | awk '{print $1}' )
-    do 
+if [[ ${VERSION} -eq 6 ]]; then
+  for service in $( chkconfig --list| grep on | awk '{print $1}' ); do
       chkconfig --level 12345 ${service} off
     done 
 
-  for i in crond network rsyslog sshd
-    do chkconfig --level 35 $i on
+  for i in crond network rsyslog sshd; do
+    chkconfig --level 35 ${i} on
   done
 
-elif [[ $VERSION == 7 ]]; then
+elif [[ ${VERSION} -eq 7 ]]; then
   for service in NetworkManager firewalld; do
     systemctl stop $service
     systemctl disable $service
@@ -51,12 +50,12 @@ fi
 
 echo "-----Add aliyun repo-----"
 cd /etc/yum.repos.d/ && mkdir bak && mv *.repo  bak/
-if [[ $VERSION == 6 ]]; then
+if [[ ${VERSION} -eq 6 ]]; then
 curl http://mirrors.aliyun.com/repo/Centos-6.repo -o /etc/yum.repos.d/Centos-6.repo --silent
 curl http://mirrors.aliyun.com/repo/epel-6.repo  -o  /etc/yum.repos.d/epel-6.repo --silent
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 
-elif [[ $VERSION == 7 ]]; then
+elif [[ $VERSION -eq 7 ]]; then
   curl http://mirrors.aliyun.com/repo/Centos-7.repo -o  /etc/yum.repos.d/Centos-7.repo --silent
   curl http://mirrors.aliyun.com/repo/epel-7.repo   -o  /etc/yum.repos.d/epel-7.repo --silent
   rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
@@ -75,27 +74,27 @@ echo "-----Settings SSH-----"
 sed -i 's%#UseDNS yes%UseDNS no%g' /etc/ssh/sshd_config
 sed -i 's/^GSSAPIAuthentication yes$/GSSAPIAuthentication no/' /etc/ssh/sshd_config
 sed -i '/#AddressFamily any/a\AddressFamily inet' /etc/ssh/sshd_config # disalbe ipv6 listen
-if [[ $VERSION == 6 ]]; then
+if [[ ${VERSION} -eq 6 ]]; then
   /etc/init.d/sshd reload
-elif [[ $VERSION == 7 ]]; then
+elif [[ ${VERSION} -eq 7 ]]; then
   systemctl reload sshd.service
 fi 
 
 echo "-----Disalbe control-alt-delete key-----"
-if [[ $VERSION == 6 ]]; then
+if [[ ${VERSION} -eq 6 ]]; then
   sed -i 's#exec /sbin/shutdown -r now#\#exec /sbin/shutdown -r now#' /etc/init/control-alt-delete.conf
   echo 'exec echo "Control+Alt+Delete already disabled"' >> /etc/init/control-alt-delete.conf
   initctl reload-configuration
   /sbin/init q
-elif [[ $VERSION == 7 ]]; then
+elif [[ ${VERSION} -eq 7 ]]; then
    ln -sf /dev/null /etc/systemd/system/ctrl-alt-del.target
    systemctl mask ctrl-alt-del.target
 fi
 
 echo "-----Settings Limit-----"
-if [[ $VERSION == 6 ]]; then
+if [[ ${VERSION} -eq 6 ]]; then
   sed -i 's/1024/65535/' /etc/security/limits.d/90-nproc.conf
-elif [[ $VERSION == 7 ]]; then
+elif [[ ${VERSION} -eq 7 ]]; then
   sed -i 's/4096/65535/' /etc/security/limits.d/20-nproc.conf
 fi
 cat >> /etc/security/limits.conf <<EOF
