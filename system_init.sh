@@ -3,11 +3,13 @@
 # fname: system_init.sh
 
 [[ ${UID} -ne 0 ]] && {
-  echo 'You must run this script as root.'; exit 1
+  echo 'You must run this script as root.'
+  exit 1
 }
 
 [[ -z $(egrep -i 'CentOS|Red Hat' /etc/redhat-release) ]] && {
-  echo 'only support CentOS or Redhat system.'; exit 1
+  echo 'only support CentOS or Redhat system.'
+  exit 1
 }
 
 VERSION=$( awk '{print $(NF-1)}' /etc/redhat-release | cut -d. -f1 )
