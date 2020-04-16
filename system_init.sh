@@ -62,7 +62,7 @@ elif [[ $VERSION -eq 7 ]]; then
 fi
 
 echo "-----Install package-----"
-yum install -y gcc gcc-c++ make autoconf vim-enhanced tmux lrzsz ntpdate unzip openssh-clients net-tools #qemu-guest-agent
+yum install -y curl gcc gcc-c++ make autoconf vim-enhanced tmux lrzsz ntpdate unzip openssh-clients net-tools #qemu-guest-agent
 
 echo "-----Settings NTP------"
 /usr/sbin/ntpdate ntp1.aliyun.com
