@@ -6,8 +6,8 @@
 # description:  Nginx is an HTTP(S) server, HTTP(S) reverse \
 #               proxy and IMAP/POP3 proxy server
 # processname:  nginx
-# config:       /usr/local/nginx/conf/nginx.conf
-# pidfile:      /usr/local/nginx/logs/nginx.pid
+# config:       /opt/nginx/conf/nginx.conf
+# pidfile:      /opt/nginx/logs/nginx.pid
 
 # Source function library.
 . /etc/rc.d/init.d/functions
