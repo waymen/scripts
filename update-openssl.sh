@@ -94,7 +94,7 @@ else
   ln -s ${OPENSSL_HOME}/inclued/openssl  /usr/include/openssl
 fi
 
-
+print "ucess. openssl install to ${OPENSSL_HOME}"
 
 
 
