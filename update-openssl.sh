@@ -69,7 +69,7 @@ print "${OPENSSL_HOME}/lib" >> /etc/ld.so.conf.d/openssl.conf
 ldconfig
 
 # 添加环opessl的环境变量
-print 'export OPENSSL_BIN=/usr/local/openssl/bin' >> /etc/profile.d/openssl.sh
+print "export OPENSSL_BIN=${OPENSSL_HOME}/bin" >> /etc/profile.d/openssl.sh
 print 'export PATH=${OPENSSL_BIN}:$PATH' /etc/profile.d/openssl.sh
 source /etc/profile.d/openssl.sh 
 
