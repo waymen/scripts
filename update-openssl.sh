@@ -89,9 +89,9 @@ source /etc/profile.d/openssl.sh
 # 添加inclue库文件(软连接)，相当于装了openssl-devel，这一步不实际上不做也可以
 if [[ -d /usr/include/openssl ]]; then 
   \mv /usr/include/openssl /usr/include/openssl.bak
-  ln -s ${OPENSSL_HOME}/inclued/openssl  /usr/include/openssl
+  ln -s ${OPENSSL_HOME}/inclue/openssl  /usr/include/openssl
 else
-  ln -s ${OPENSSL_HOME}/inclued/openssl  /usr/include/openssl
+  ln -s ${OPENSSL_HOME}/inclue/openssl  /usr/include/openssl
 fi
 
 print "ucess. openssl install to ${OPENSSL_HOME}"
