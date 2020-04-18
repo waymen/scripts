@@ -54,7 +54,7 @@ openssl_version=$( openssl version 2> /dev/null | awk '{print $2}' | egrep '([0-
   openssl_version_major=$( awk -F. '{print $2}' )
   openssl_version_minor=$( awk -F. '{print $3}' )
   openssl_version_micro=$( awk -F. '{print $3}' )
-  ( [[ ${openssl_version_major} -ge 1 ]] && [[ ${openssl_version_minor} -ge 1 ]] ) \ &&
+  {{ [[ ${openssl_version_major} -ge 1 ]] && [[ ${openssl_version_minor} -ge 1 ]]; }} && \
   [[ ${openssl_version_micro} -ge 1 ]] ) && { 
     exit_msg "当前openssl版本为: ${openssl_version} 高于1.1.1，略过" 
   }
