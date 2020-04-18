@@ -35,10 +35,10 @@ exit_msg() {
 export OPENSSL_CONFDIR
 
 # 安装目录是否存在, 检查是否安装过
-[[ -d ${OPENSSL_HOME} ]] || { exit_msg "${OPENSSL_HOME}: 已存在"; }
+[[ -d ${OPENSSL_HOME} ]] && { exit_msg "${OPENSSL_HOME}: 已存在"; }
 
 # 配置目录是否存在, 检查是否安装过
-[[ -d ${OPENSSL_CONFDIR} ]] || { exit_msg "${OPENSSL_CONFDIR}: 已存在"; }
+[[ -d ${OPENSSL_CONFDIR} ]] && { exit_msg "${OPENSSL_CONFDIR}: 已存在"; }
 
 # 如果OPENSSL_TAR指定的源码包不存在则下载
 [[ -f ${OPENSSL_TAR} ]] || {
