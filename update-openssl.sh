@@ -72,7 +72,7 @@ cd ${OPENSSL_BUILD_DIR}
 tar xf ${OPENSSL_TAR}
 OPENSSL_TARDIR=${OPENSSL_TAR%*.tar.gz}
 export OPENSSL_TARDIR
-cd OPENSSL_TARDIR
+cd ${OPENSSL_TARDIR}
 ./config --prefix=${OPENSSL_HOME} openssldir=${OPENSSL_CONFDIR} shared zlib
 make -j $(awk '/^processor/' '/proc/cpuinfo' | sort |uniq | wc -l) || exit_msg "make 失败"
 make install
