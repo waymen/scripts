@@ -83,7 +83,7 @@ ldconfig
 
 # 添加环opessl的环境变量
 print "export OPENSSL_BIN=${OPENSSL_HOME}/bin" > /etc/profile.d/openssl.sh
-print 'export PATH=${OPENSSL_BIN}:$PATH' > /etc/profile.d/openssl.sh
+print 'export PATH=${OPENSSL_BIN}:$PATH' >> /etc/profile.d/openssl.sh
 source /etc/profile.d/openssl.sh 
 
 # 添加inclue库文件(软连接)，相当于装了openssl-devel，这一步不实际上不做也可以
