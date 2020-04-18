@@ -47,6 +47,19 @@ export OPENSSL_CONFDIR
     exit_msg "下载 ${OPENSSL_TAR}失败"
   }
 }
+
+# 检测当前openssl版本是否低于1.1.1
+openssl_version=$( openssl version 2> /dev/null | awk '{print $2}' | egrep '([0-9]+\.){2}[0-9]' -o)
+[[ ${openssl_version} ]] || {
+  openssl_version_major=$( awk -F. '{print $2}' )
+  openssl_version_minor=$( awk -F. '{print $3}' )
+  openssl_version_micro=$( awk -F. '{print $3}' )
+  ( [[ ${openssl_version_major} -ge 1 ]] && [[ ${openssl_version_minor} -ge 1 ]] \ &&
+  [[ ${openssl_version_micro} -ge 1 ]] ) && { 
+    exit_msg "当前openssl版本为: ${openssl_version} 高于1.1.1，略过" 
+  }
+}
+
 # 这步说明包已经存在了，开始编译安装
 # 安装依赖包
 yum -y install ${OPENSSL_NEED_PACKAGE} &> /dev/null || {
