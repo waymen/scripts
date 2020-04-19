@@ -45,7 +45,7 @@ export OPENSSL_CONFDIR
 [[ -f ${OPENSSL_TAR} ]] || {
   curl -sOL https://www.openssl.org/source/${OPENSSL_TAR} &> /dev/null
   [[ $? -ne 0 ]] || [[ ! -f ${OPENSSL_TAR} ]] && {
-    exit_msg "下载 ${OPENSSL_TAR}失败"
+    exit_msg "下载 ${OPENSSL_TAR}失败，请检查网络"
   }
 }
 
