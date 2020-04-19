@@ -1,5 +1,5 @@
 # sciprts
-一些生产环境、练习、学习使用的脚本
+一些生产环境、练习、学习使用的脚本，都在生产环境使用过
 
 ## system_init.sh
 用于centos/rhel系统初始化
@@ -13,4 +13,8 @@ curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/system_init.sh
 ```
 curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/install_nginx.sh ｜ bash
 ```
-
+## update-opnessl.sh
+自动编译安装openssl至1.1.1f稳定版本，centos系列的openssl版本都比较低，存在一些安全漏洞问题，另外安装一些新的包时也需要新版本的openssl，官方推荐使用openssl1.1.1系列版本
+```
+curl -sSL https://raw.githubusercontent.com/waymen/scripts/master/update-openssl.sh ｜ bash
+```
