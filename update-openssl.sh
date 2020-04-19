@@ -3,11 +3,11 @@
 # 2020/01/10
 
 ##################################### variables ###############################################################
-OPENSSL_HOME="/usr/local/openssl"
-OPENSSL_CONFDIR=                             
-OPENSSL_TAR="openssl-1.1.1f.tar.gz"
-OPENSSL_BUILD_DIR="/tmp"
-OPENSSL_NEED_PACKAGE="gcc make zlib-devel curl"
+OPENSSL_HOME="/usr/local/openssl"                 # 安装目录
+OPENSSL_CONFDIR=                                  # 配置目录，默认为安装目录
+OPENSSL_TAR="openssl-1.1.1f.tar.gz"               # openssl包名
+OPENSSL_BUILD_DIR="/tmp"                          # 临时构建目录
+OPENSSL_NEED_PACKAGE="gcc make zlib-devel curl"   # 依赖包
 
 export OPENSSL_HOME OPENSSL_CONFDIR OPENSSL_TAR OPENSSL_BUILD_DIR OPENSSL_NEED_PACKAGE
 
@@ -31,6 +31,7 @@ exit_msg() {
   exit_msg '仅支持CentOS或Redhat系统'
 }
 
+# 默认配置目录等于安装目录 
 [[ ${OPENSSL_CONFDIR} ]] || OPENSSL_CONFDIR=${OPENSSL_HOME}
 export OPENSSL_CONFDIR
 
