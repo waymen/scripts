@@ -9,7 +9,7 @@
 #5. 启动
 
 NGINX_OWNER="nginx"                                 # nginx拥有者
-NGINX_INSTALL_DIR="/opt/nginx"                      # nginx安装目录
+NGINX_INSTALL_DIR="/opt/app/nginx"                  # nginx安装目录
 PCRE_SOURCE_PACKAGE="pcre-8.44.tar.gz"              # pcre源码包
 NGINX_SOURCE_PACKAGE="nginx-1.16.1.tar.gz"          # nginx源码包
 PCRE_SOUCRE_DIR=${PCRE_SOURCE_PACKAGE%*.tar.gz}     # pcre文件名
@@ -73,7 +73,7 @@ grep -q ${NGINX_OWNER} /etc/passwd || {
 cd ${MAKE_TEMP}
 curl -sLO http://nginx.org/download/${NGINX_SOURCE_PACKAGE}
 if [[ $? -ne 0 ]] || [[ ! -f ${NGINX_SOURCE_PACKAGE} ]]; then
-  echo "下载: ${NGINX_SOURCE_PACKAGE} 失败"
+  echo "下载: ${NGINX_SOURCE_PACKAGE} 失败, 请检查网络"
   exit
 fi
 
